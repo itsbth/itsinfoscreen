@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Conforming XHTML 1.0 Strict Template</title>
+        <link rel="stylesheet" href="/static/style.css" />
+        <script src="http://www.google.com/jsapi">
+        </script>
+        <script>
+            google.load("jquery", "1.3.2");
+            google.load("jqueryui", "1.7.2");
+            google.load("feeds", "1");
+        </script>
+        <script src="/static/jquery.sparkline.js">
+        </script>
+        <script src="/static/main.js">
+        </script>
+    </head>
+    <body>
+        <h1 id="loadingText">Loading...</h1>
+        <div id="cpu">
+            <h2>CPU Usage</h2>
+            <ul>
+                <li>
+                    <strong>Core 0: </strong>
+                    <span id="cpuline0"></span>
+                </li>
+                <li>
+                    <strong>Core 1: </strong>
+                    <span id="cpuline1"></span>
+                </li>
+                <li>
+                    <strong>Core 2: </strong>
+                    <span id="cpuline2"></span>
+                </li>
+                <li>
+                    <strong>Core 3: </strong>
+                    <span id="cpuline3"></span>
+                </li>
+                <li>
+                    <strong>Core 4: </strong>
+                    <span id="cpuline4"></span>
+                </li>
+                <li>
+                    <strong>Core 5: </strong>
+                    <span id="cpuline5"></span>
+                </li>
+                <li>
+                    <strong>Core 6: </strong>
+                    <span id="cpuline6"></span>
+                </li>
+                <li>
+                    <strong>Core 7: </strong>
+                    <span id="cpuline7"></span>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+body {
+	background: #FFFFFF; /* HACK */
+}
+
+#content {
+	display: none;
+	width: 100%;
+	height: 100%;
+}
+
+.column {
+	float: left;
+	margin-left: 20px;
+	list-style: none;
+	width: 200px;
+	min-height: 200px;
+	display: block;
+}
+
+h2 {
+	margin: 0;
+	padding: 0;
+}
+
+#cpu {
+	width: 200px;
+}
+
+#cpu ul {
+	list-style: none;
+	margin: 0;
+	padding: 10px 20px 0 20px;
+}
