@@ -47,12 +47,9 @@ class CPUMeterWin32(object):
     def update(self):
         return self._get_stats()
     
-class CPUProvider(object):
+class Widget(object):
     def __init__(self):
         self._total, self._cores = CPUMeterWin32(), [CPUMeterWin32("0," + str(i)) for i in range(0, 8)]
     
     def update(self):
         return [self._total.update(), [round(c.update(), 1) for c in self._cores]]
-    
-class TopFiveProvider(object):
-    pass

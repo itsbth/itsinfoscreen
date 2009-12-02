@@ -1,75 +1,79 @@
 /**
  * @author itsbth
  */
-
-var cpuc = [];
-for	(var i = 0; i < 8; i++) {
-	cpuc[i] = [];
+function widgetproto(){
+    this.callbacks = {};
+    this.Register = function(name, options){
+        options = $.extend({
+            title: 'N/A',
+            hasCSS: false
+        }, options);
+        if (options['update']) 
+            this.callbacks[name] = options['update'];
+		
+        var widget = $('<li class="ui-widget-content"><h2 class="ui-widget-header">' + options['title'] + '</h2></li>').addClass('widget-' + name).appendTo(".column:first");
+        $.get('/widget/' + name + '/html', function(data){
+            widget.append($(data));
+            if (options['init']) 
+                options['init'](widget);
+        });
+        if (options['hasCSS']) {
+            $('<link rel="stylesheet" />').attr('href', '/widget/' + name + '/css').appendTo('head');
+        }
+    }
+    this.Load = function(name){
+        $.getScript('/widget/' + name + '/js');
+        $.get('/widget/' + name + '/add');
+    }
+    
+    var loading = false;
+    
+    this.Callback = function(data){
+        console.dir(data);
+		console.dir(this.callbacks);
+        loading = false;
+        for (var cb in data) {
+            if (this.callbacks[cb]) {
+                this.callbacks[cb](data[cb]);
+            } else {
+				//$.get('/widget/' + cb + '/remove');
+			}
+        }
+    }
+    
+    this.Request = function(){
+        loading = true;
+        $.getJSON('/update', function(data){
+            widget.Callback(data);
+        });
+    }
+    
+    this.Init = function(){
+        $("#loadingText").remove();
+        $("#content").fadeIn('slow');
+        $("title").text("Initializing :: {ItsInfoScreen}");
+        $(".column").sortable({
+            connectWith: ".column",
+            placeholder: 'ui-state-highlight'
+        });
+        bganim();
+        setInterval(this.Request, 500);
+    }
+    
+    var colors = ["#87CCE8", "#94C4FF", "#A1FCFF", "#87E8D0", "#94FFC7"];
+    
+    function bganim(){
+        $('body').animate({
+            backgroundColor: colors[Math.floor(Math.random() * colors.length)]
+        }, 10000, bganim);
+    }
 }
 
-var callbackTable = {
-	'cpu': function (cdata) {
-		$("#cputot").progressbar('option', 'value', cdata[0]);
-		var data = cdata[1];
-		for (var i = data.length - 1; i >= 0; i--) {
-			cpuc[i].push(data[i]);
-			if (cpuc[i].length > 20) cpuc[i].shift();
-			$("#cpuline" + i).sparkline(cpuc[i], {
-				'chartRangeMin': 0,
-				'chartRangeMax': 100
-			});
-		}
-	}
-};
+widget = new widgetproto();
 
-function bgAnim () {
-	$('body').animate({
-		backgroundColor: colors[Math.floor(Math.random() * colors.length)] 
-	}, 10000, bgAnim);
-}
-
-var initCallbacks = [
-	function () {
-		$("#cputot").progressbar({value: 0});
-	},
-	bgAnim
-];
-
-var loading = false;
-
-function callback (data) {
-	loading = false;
-	for (var cb in data) {
-		if (callbackTable[cb]) {
-			callbackTable[cb](data[cb]);
-		}
-	}
-}
-
-function request () {
-	loading = true;
-	$.getJSON('/update', callback);
-}
-
-var colors = ["#87CCE8", "#94C4FF", "#A1FCFF", "#87E8D0", "#94FFC7"];
-
-function init () {
-	$("#loadingText").remove();
-	$("#content").fadeIn('slow');
-	$("title").text("Initializing :: {ItsInfoScreen}");
-	/*
-	$(".draggable").draggable({
-			grid: [220, 100]
-		});
-	*/
-	$(".column").sortable({connectWith: ".column", placeholder: 'ui-state-highlight'});
-	
-	for (var i = initCallbacks.length - 1; i >= 0; i--){
-		initCallbacks[i]();
-	};
-	
-	setInterval(request, 500);
-	// setTimeout(function () { window.location.reload(true); }, 60000);
+function init(){
+    widget.Init();
+    widget.Load('cpu');
 }
 
 google.setOnLoadCallback(init);
