@@ -1,23 +1,44 @@
 body {
-	background: #FFFFFF; /* HACK */
+    background: #FFFFFF;
+	margin: 0;
+	overflow: hidden; /* Never display scrollbars */
 }
 
 #content {
-	display: none;
-	width: 100%;
-	height: 100%;
+    display: none;
+    height: 100%;
+    width: 100%;
 }
 
 .column {
-	float: left;
-	margin-left: 20px;
-	list-style: none;
-	width: 200px;
-	min-height: 200px;
-	display: block;
+    display: block;
+    float: left;
+    list-style: none;
+    margin-left: 20px;
+    min-height: 200px;
+    width: 200px;
 }
 
 h2 {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#sidebar {
+	background: #FFFFFF;
+	border-left: 3px solid #000000;
+	float: right;
+    height: 100%;
+	width: 0;
+}
+
+#tab {
+    background: url("img/sidebartab.png");
+	cursor: e-resize;
+    height: 128px;
+    margin-top: 50%;
+	margin-left: -64px;
+	opacity: 0;
+    width: 64px;
 }
